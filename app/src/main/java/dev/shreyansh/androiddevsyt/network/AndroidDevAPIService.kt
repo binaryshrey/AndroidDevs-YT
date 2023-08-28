@@ -8,25 +8,25 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 
 
-private const val BASE_URL = "https://devbytes.udacity.com"
-
-private val moshi = Moshi.Builder()
-    .add(KotlinJsonAdapterFactory())
-    .build()
-
-private val retrofit = Retrofit.Builder()
-    .addConverterFactory(MoshiConverterFactory.create(moshi))
-    .addCallAdapterFactory(CoroutineCallAdapterFactory())
-    .baseUrl(BASE_URL)
-    .build()
+//private const val BASE_URL = "https://devbytes.udacity.com"
+//
+//private val moshi = Moshi.Builder()
+//    .add(KotlinJsonAdapterFactory())
+//    .build()
+//
+//private val retrofit = Retrofit.Builder()
+//    .addConverterFactory(MoshiConverterFactory.create(moshi))
+//    .addCallAdapterFactory(CoroutineCallAdapterFactory())
+//    .baseUrl(BASE_URL)
+//    .build()
 
 interface AndroidDevAPIService {
     @GET("/devbytes.json")
     suspend fun getVideos(): AndroidDevResponse
 }
 
-object AndroidDevAPI {
-    val retrofitService: AndroidDevAPIService by lazy {
-        retrofit.create(AndroidDevAPIService::class.java)
-    }
-}
+//object AndroidDevAPI {
+//    val retrofitService: AndroidDevAPIService by lazy {
+//        retrofit.create(AndroidDevAPIService::class.java)
+//    }
+//}

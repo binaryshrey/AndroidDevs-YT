@@ -2,18 +2,18 @@ package dev.shreyansh.androiddevsyt.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.*
-import dev.shreyansh.androiddevsyt.database.AndroidDevDatabase.Companion.getInstance
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.shreyansh.androiddevsyt.repository.AndroidDevsRepository
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
 
-class AndroidDevsViewModel(application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class AndroidDevsViewModel @Inject constructor(androidDevsRepository: AndroidDevsRepository) : ViewModel() {
 
     enum class APIStatus { LOADING, DONE, FAILURE }
 
-    private val database = getInstance(application)
-    private val repository = AndroidDevsRepository(database)
-    val playlist = repository.videos
+    val playlist = androidDevsRepository.videos
 
     private val _loginComplete = MutableLiveData<Boolean>()
     val loginComplete: LiveData<Boolean>
@@ -28,7 +28,7 @@ class AndroidDevsViewModel(application: Application) : AndroidViewModel(applicat
         viewModelScope.launch {
             _status.postValue(APIStatus.LOADING)
             try {
-                repository.refreshVideos()
+                androidDevsRepository.refreshVideos()
                 _status.postValue(APIStatus.DONE)
             } catch (e: Exception) {
                 Timber.i("${e.message}")

@@ -1,7 +1,7 @@
 package dev.shreyansh.androiddevsyt.domain
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 
 @Parcelize

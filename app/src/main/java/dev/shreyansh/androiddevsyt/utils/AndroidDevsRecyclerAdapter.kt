@@ -5,26 +5,27 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import dagger.hilt.android.scopes.FragmentScoped
 import dev.shreyansh.androiddevsyt.databinding.VideoListItemBinding
 import dev.shreyansh.androiddevsyt.domain.Video
+import javax.inject.Inject
 
-class AndroidDevsRecyclerAdapter (val onClickListener: OnClickListener) : ListAdapter<Video, AndroidDevsRecyclerAdapter.ViewHolder>(DiffUtilCallback()) {
+@FragmentScoped
+class AndroidDevsRecyclerAdapter @Inject constructor(val clickListener: OnClickListener) : ListAdapter<Video, AndroidDevsRecyclerAdapter.ViewHolder>(DiffUtilCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AndroidDevsRecyclerAdapter.ViewHolder {
         return ViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: AndroidDevsRecyclerAdapter.ViewHolder, position: Int) {
         val model = getItem(position)
-        holder.itemView.setOnClickListener {
-            onClickListener.onClick(model)
-        }
-        holder.bind(model)
+        holder.bind(model, clickListener)
     }
 
     class ViewHolder private constructor(val binding: VideoListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(model: Video) {
+        fun bind(model: Video, clickListener: OnClickListener) {
             binding.video = model
+            binding.clickListener = clickListener
             binding.executePendingBindings()
         }
 
@@ -37,9 +38,9 @@ class AndroidDevsRecyclerAdapter (val onClickListener: OnClickListener) : ListAd
             }
         }
     }
-    class OnClickListener(val clickListener: (model : Video) -> Unit){
-        fun onClick(model : Video) = clickListener(model)
-    }
+//    class OnClickListener @Inject constructor(val clickListener: (model : Video) -> Unit){
+//        fun onClick(model : Video) = clickListener(model)
+//    }
 
 }
 
@@ -54,3 +55,11 @@ class DiffUtilCallback : DiffUtil.ItemCallback<Video>() {
 
 }
 
+class OnClickListener @Inject constructor() {
+
+    var onItemClick: ((Video) -> Unit)? = null
+
+    fun onClick(video: Video) {
+        onItemClick?.invoke(video)
+    }
+}

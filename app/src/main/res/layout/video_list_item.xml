@@ -9,6 +9,10 @@
             name="video"
             type="dev.shreyansh.androiddevsyt.domain.Video" />
 
+        <variable
+            name="clickListener"
+            type="dev.shreyansh.androiddevsyt.utils.OnClickListener" />
+
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -18,6 +22,7 @@
         android:clickable="true"
         android:focusable="true"
         app:cardCornerRadius="@dimen/dimen_0"
+        android:onClick="@{() -> clickListener.onClick(video)}"
         app:cardElevation="0dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout

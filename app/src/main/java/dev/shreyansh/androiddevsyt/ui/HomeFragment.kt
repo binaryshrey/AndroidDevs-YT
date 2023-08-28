@@ -18,20 +18,25 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
 import dev.shreyansh.androiddevsyt.R
 import dev.shreyansh.androiddevsyt.databinding.FragmentHomeBinding
 import dev.shreyansh.androiddevsyt.utils.AndroidDevsRecyclerAdapter
 import dev.shreyansh.androiddevsyt.viewmodel.AndroidDevsViewModel
-import dev.shreyansh.androiddevsyt.viewmodel.AndroidDevsViewModelFactory
+import javax.inject.Inject
 
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var androidDevsRecyclerAdapter: AndroidDevsRecyclerAdapter
-    private val viewModel: AndroidDevsViewModel by activityViewModels {
-        AndroidDevsViewModelFactory(requireNotNull(this.activity).application)
-    }
+
+    @Inject
+    lateinit var androidDevsRecyclerAdapter: AndroidDevsRecyclerAdapter
+//    private val viewModel: AndroidDevsViewModel by activityViewModels {
+//        AndroidDevsViewModelFactory(requireNotNull(this.activity).application)
+//    }
+    private val viewModel: AndroidDevsViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -64,12 +69,17 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        androidDevsRecyclerAdapter = AndroidDevsRecyclerAdapter(
-            AndroidDevsRecyclerAdapter.OnClickListener {
-                Toast.makeText(context, "${it.title}", Toast.LENGTH_SHORT).show()
-                var intent = Intent(Intent.ACTION_VIEW, Uri.parse(it.url))
-                startActivity(intent)
-            })
+//        androidDevsRecyclerAdapter = AndroidDevsRecyclerAdapter(
+//            AndroidDevsRecyclerAdapter.OnClickListener {
+//                Toast.makeText(context, "${it.title}", Toast.LENGTH_SHORT).show()
+//                var intent = Intent(Intent.ACTION_VIEW, Uri.parse(it.url))
+//                startActivity(intent)
+//            })
+        androidDevsRecyclerAdapter.clickListener.onItemClick = {
+            Toast.makeText(context, "${it.title}", Toast.LENGTH_SHORT).show()
+            var intent = Intent(Intent.ACTION_VIEW, Uri.parse(it.url))
+            startActivity(intent)
+        }
         binding.listRV.adapter = androidDevsRecyclerAdapter
 
     }

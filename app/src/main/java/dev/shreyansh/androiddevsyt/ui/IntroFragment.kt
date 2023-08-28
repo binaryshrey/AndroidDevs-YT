@@ -19,23 +19,30 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import dagger.hilt.android.AndroidEntryPoint
 import dev.shreyansh.androiddevsyt.R
 import dev.shreyansh.androiddevsyt.databinding.FragmentIntroBinding
 import dev.shreyansh.androiddevsyt.utils.NetworkConnection
 import dev.shreyansh.androiddevsyt.viewmodel.AndroidDevsViewModel
-import dev.shreyansh.androiddevsyt.viewmodel.AndroidDevsViewModelFactory
 import timber.log.Timber
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class IntroFragment : Fragment() {
 
     private var isConnected = false
     private lateinit var auth: FirebaseAuth
     private lateinit var binding: FragmentIntroBinding
-    private lateinit var networkConnection: NetworkConnection
+
+    @Inject
+    lateinit var networkConnection: NetworkConnection
+
     private lateinit var googleSignInClient: GoogleSignInClient
-    private val viewModel: AndroidDevsViewModel by activityViewModels {
-        AndroidDevsViewModelFactory(requireNotNull(this.activity).application)
-    }
+//    private val viewModel: AndroidDevsViewModel by activityViewModels {
+//        AndroidDevsViewModelFactory(requireNotNull(this.activity).application)
+//    }
+    private val viewModel: AndroidDevsViewModel by activityViewModels()
+
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -57,7 +64,6 @@ class IntroFragment : Fragment() {
 
 
     private fun setupObservers() {
-        networkConnection = NetworkConnection(requireNotNull(this.activity).application)
         networkConnection.observe(viewLifecycleOwner, Observer { connected ->
             isConnected = connected
         })
