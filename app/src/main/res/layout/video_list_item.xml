@@ -9,9 +9,6 @@
             name="video"
             type="dev.shreyansh.androiddevsyt.domain.Video" />
 
-        <variable
-            name="clickListener"
-            type="dev.shreyansh.androiddevsyt.utils.ClickListener" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
@@ -22,7 +21,6 @@ import com.google.firebase.auth.FirebaseAuth
 import dev.shreyansh.androiddevsyt.R
 import dev.shreyansh.androiddevsyt.databinding.FragmentHomeBinding
 import dev.shreyansh.androiddevsyt.utils.AndroidDevsRecyclerAdapter
-import dev.shreyansh.androiddevsyt.utils.ClickListener
 import dev.shreyansh.androiddevsyt.viewmodel.AndroidDevsViewModel
 import dev.shreyansh.androiddevsyt.viewmodel.AndroidDevsViewModelFactory
 
@@ -66,11 +64,12 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        androidDevsRecyclerAdapter = AndroidDevsRecyclerAdapter(ClickListener { it ->
-            Toast.makeText(context, "${it.title}", Toast.LENGTH_SHORT).show()
-            var intent = Intent(Intent.ACTION_VIEW, Uri.parse(it.url))
-            startActivity(intent)
-        })
+        androidDevsRecyclerAdapter = AndroidDevsRecyclerAdapter(
+            AndroidDevsRecyclerAdapter.OnClickListener {
+                Toast.makeText(context, "${it.title}", Toast.LENGTH_SHORT).show()
+                var intent = Intent(Intent.ACTION_VIEW, Uri.parse(it.url))
+                startActivity(intent)
+            })
         binding.listRV.adapter = androidDevsRecyclerAdapter
 
     }

@@ -8,21 +8,23 @@ import androidx.recyclerview.widget.RecyclerView
 import dev.shreyansh.androiddevsyt.databinding.VideoListItemBinding
 import dev.shreyansh.androiddevsyt.domain.Video
 
-class AndroidDevsRecyclerAdapter (val clickListener : ClickListener) : ListAdapter<Video, AndroidDevsRecyclerAdapter.ViewHolder>(DiffUtilCallback()) {
+class AndroidDevsRecyclerAdapter (val onClickListener: OnClickListener) : ListAdapter<Video, AndroidDevsRecyclerAdapter.ViewHolder>(DiffUtilCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AndroidDevsRecyclerAdapter.ViewHolder {
         return ViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: AndroidDevsRecyclerAdapter.ViewHolder, position: Int) {
         val model = getItem(position)
-        holder.bind(model,clickListener)
+        holder.itemView.setOnClickListener {
+            onClickListener.onClick(model)
+        }
+        holder.bind(model)
     }
 
     class ViewHolder private constructor(val binding: VideoListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(model: Video,clickListener : ClickListener) {
+        fun bind(model: Video) {
             binding.video = model
-            binding.clickListener = clickListener
             binding.executePendingBindings()
         }
 
@@ -34,6 +36,9 @@ class AndroidDevsRecyclerAdapter (val clickListener : ClickListener) : ListAdapt
                 return ViewHolder(binding)
             }
         }
+    }
+    class OnClickListener(val clickListener: (model : Video) -> Unit){
+        fun onClick(model : Video) = clickListener(model)
     }
 
 }
@@ -49,6 +54,3 @@ class DiffUtilCallback : DiffUtil.ItemCallback<Video>() {
 
 }
 
-class ClickListener(val clickListener: (model : Video) -> Unit){
-    fun onClick(model : Video) = clickListener(model)
-}
