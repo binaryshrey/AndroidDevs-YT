@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="dev.shreyansh.androiddevsyt.viewmodel.AndroidDevsViewModel" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/introLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        tools:context=".ui.IntroFragment">
+
+        <TextView
+            android:id="@+id/appname_TV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_48"
+            android:layout_marginEnd="@dimen/dimen_48"
+            android:fontFamily="@font/open_sans_semibold"
+            android:text="Android Developers YT Channel"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dimen_20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.700" />
+
+        <TextView
+            android:id="@+id/tagline_TV"
+            android:layout_width="@dimen/dimen_0"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_48"
+            android:layout_marginTop="@dimen/dimen_4"
+            android:layout_marginEnd="@dimen/dimen_48"
+            android:layout_marginBottom="@dimen/dimen_16"
+            android:alpha="0.7"
+            android:fontFamily="@font/open_sans"
+            android:includeFontPadding="true"
+            android:text="A minimalistic app to showcase the latest videos from the Android Developers YT Channel"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dimen_12"
+            app:layout_constraintBottom_toTopOf="@+id/next_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appname_TV"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/next_button"
+            android:layout_width="@dimen/dimen_0"
+            android:layout_height="@dimen/dimen_56"
+            android:layout_marginStart="@dimen/dimen_48"
+            android:layout_marginEnd="@dimen/dimen_48"
+            android:layout_marginBottom="@dimen/dimen_24"
+            android:drawableLeft="@drawable/ic_google"
+            android:fontFamily="@font/open_sans"
+            android:onClick="@{() -> viewModel.onLogin()}"
+            android:text="LOGIN"
+            android:textColor="@color/white"
+            app:backgroundTint="@color/green_700"
+            app:cornerRadius="@dimen/dimen_8"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/loadingProgress"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="@dimen/dimen_16"
+            android:layout_height="@dimen/dimen_16"
+            android:layout_marginBottom="@dimen/dimen_44"
+            android:elevation="@dimen/dimen_4"
+            android:indeterminateTint="@color/white"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.700"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/bannerIV"
+            android:layout_width="@dimen/dimen_0"
+            android:layout_height="550dp"
+            android:contentDescription="@string/banner"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/banner" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
